@@ -1,5 +1,10 @@
 package com.anupam.habithero;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import java.util.ArrayList;
+import java.util.List;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
@@ -18,6 +23,20 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
+        RecyclerView rvHabits = findViewById(R.id.rvHabits);
+
+        List<Habit> habitList = new ArrayList<>();
+
+        habitList.add(new Habit("✅ Exercise"));
+        habitList.add(new Habit("✅ Reading"));
+        habitList.add(new Habit("✅ Coding"));
+
+        HabitAdapter adapter = new HabitAdapter(habitList);
+
+        rvHabits.setLayoutManager(
+                new LinearLayoutManager(this));
+
+        rvHabits.setAdapter(adapter);
 
         Button btnAddHabit = findViewById(R.id.btnAddHabit);
 
