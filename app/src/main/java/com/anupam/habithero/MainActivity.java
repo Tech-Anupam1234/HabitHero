@@ -17,6 +17,8 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static final int REQUEST_CODE_ADD_HABIT = 1;
+
     private List<Habit> habitList;
     private HabitAdapter adapter;
 
@@ -38,7 +40,9 @@ public class MainActivity extends AppCompatActivity {
 
         adapter = new HabitAdapter(habitList);
 
-        rvHabits.setLayoutManager(new LinearLayoutManager(this));
+        rvHabits.setLayoutManager(
+                new LinearLayoutManager(this));
+
         rvHabits.setAdapter(adapter);
 
         btnAddHabit.setOnClickListener(v -> {
@@ -47,8 +51,9 @@ public class MainActivity extends AppCompatActivity {
                     new Intent(MainActivity.this,
                             AddHabitActivity.class);
 
-            startActivity(intent);
-
+            startActivityForResult(
+                    intent,
+                    REQUEST_CODE_ADD_HABIT);
         });
 
         ViewCompat.setOnApplyWindowInsetsListener(
@@ -68,5 +73,34 @@ public class MainActivity extends AppCompatActivity {
 
                     return insets;
                 });
+    }
+
+    @Override
+    protected void onActivityResult(
+            int requestCode,
+            int resultCode,
+            Intent data) {
+
+        super.onActivityResult(
+                requestCode,
+                resultCode,
+                data);
+
+        if (requestCode == REQUEST_CODE_ADD_HABIT
+                && resultCode == RESULT_OK
+                && data != null) {
+
+            String habitName =
+                    data.getStringExtra("habit_name");
+
+            if (habitName != null
+                    && !habitName.isEmpty()) {
+
+                habitList.add(
+                        new Habit("✅ " + habitName));
+
+                adapter.notifyDataSetChanged();
+            }
+        }
     }
 }
