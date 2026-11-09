@@ -1,9 +1,9 @@
 package com.anupam.habithero;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -37,16 +37,14 @@ public class AddHabitActivity extends AppCompatActivity {
                 return;
             }
 
-            Toast.makeText(
-                    AddHabitActivity.this,
-                    "Habit Saved Successfully\n" +
-                            "Habit: " + habitName +
-                            "\nCategory: " + category,
-                    Toast.LENGTH_LONG
-            ).show();
+            Intent resultIntent = new Intent();
 
-            etHabitName.setText("");
-            etCategory.setText("");
+            resultIntent.putExtra("habit_name", habitName);
+            resultIntent.putExtra("category", category);
+
+            setResult(RESULT_OK, resultIntent);
+
+            finish();
         });
     }
 }
