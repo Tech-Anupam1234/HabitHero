@@ -36,6 +36,15 @@ public class AddHabitActivity extends AppCompatActivity {
                 etCategory.setError("Enter Category");
                 return;
             }
+            HabitEntity habit = new HabitEntity(
+                    habitName,
+                    category
+            );
+
+            DatabaseClient
+                    .getDatabase(this)
+                    .habitDao()
+                    .insertHabit(habit);
 
             Intent resultIntent = new Intent();
 
